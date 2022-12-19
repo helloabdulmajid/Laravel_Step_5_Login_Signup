@@ -2,7 +2,7 @@
 
 
 @if(Session::get('user'))
-<a href="/register" ><button>Welcome Abdul </button></a>
+<a href="/register" ><button>Welcome {{Session::get('user')}} </button></a>
 
 @else
 <a href="/login" ><button>Login</button></a>
