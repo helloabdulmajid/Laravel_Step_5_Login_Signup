@@ -24,5 +24,14 @@ class UsersController extends Controller
         return redirect('/home');
 
     }
+    function login(Request $req)
+    {
+     $user= User::where('email',$req->input('useremail'))->get();
+     if(Crypt::decrypt($user[0]->password)==$req->input('userpass'))
+     {
+        $req->session()->put('user',$user[0]->name);
+        return redirect('/home');
+     }
+    }
 
 }

@@ -23,4 +23,7 @@ Route::POST('/register',[UsersController::class,'add']);
 Route::get('/home',function(){
     return view('/home');
 });
+Route::view('/login','login');
+Route::POST('/login',[UsersController::class,'login']);
+
 
