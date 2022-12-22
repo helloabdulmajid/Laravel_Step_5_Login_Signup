@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;  
 
@@ -18,12 +19,36 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('/register','register');
+Route::get('/register',function(){
+    if(session()->has('user'))
+    {
+        return redirect('/home');
+    }
+    return view('/register');
+}
+);
 Route::POST('/register',[UsersController::class,'add']);
 Route::get('/home',function(){
     return view('/home');
 });
-Route::view('/login','login');
+// Route::view('/login','login');
 Route::POST('/login',[UsersController::class,'login']);
 
+Route::get('/login',function(){
+    if(session()->has('user'))
+    {
+        return redirect('/profile');
+    }
+    return view('/login');
+    });
 
+Route::get('/logout',function(){
+    if(session()->has('user'))
+    {
+     session()->pull('user');   
+    }
+    return redirect('/home');
+    });
+
+Route::get('/profile',[ProfileController::class,'profile']);
+// Route::view('/profile',[ProfileController::class,'profile']);

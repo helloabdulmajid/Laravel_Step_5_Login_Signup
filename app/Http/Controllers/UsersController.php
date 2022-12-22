@@ -20,7 +20,7 @@ class UsersController extends Controller
         $user->password=Crypt::encrypt($req->input('userpass'));
         $user->contact=$req->input('usercontact');
         $user->save();
-        $req->session()->put('user',$req->input('username'));
+        // $req->session()->put('user',$req->input('username'));
         return redirect('/home');
 
     }
@@ -28,10 +28,16 @@ class UsersController extends Controller
     {
      $user= User::where('email',$req->input('useremail'))->get();
      if(Crypt::decrypt($user[0]->password)==$req->input('userpass'))
-     {
+     {  
+        $req->session()->put('user',$req->input('username'));
         $req->session()->put('user',$user[0]->name);
+        return redirect('/profile');
+     }
+     else{
+        // return "Please Enter user crediantial";
         return redirect('/home');
      }
+     
     }
 
 }
